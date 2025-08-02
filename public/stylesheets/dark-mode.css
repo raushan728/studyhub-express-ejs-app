@@ -1,0 +1,593 @@
+/* Dark Mode Styles */
+:root {
+    /* Light Mode Colors */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-tertiary: #e9ecef;
+    --text-primary: #333333;
+    --text-secondary: #6c757d;
+    --text-muted: #adb5bd;
+    --border-color: #e9ecef;
+    --border-light: #f1f3f4;
+    --shadow-light: rgba(0, 0, 0, 0.1);
+    --shadow-medium: rgba(0, 0, 0, 0.15);
+    --shadow-heavy: rgba(0, 0, 0, 0.25);
+    --accent-primary: #6366f1;
+    --accent-secondary: #8b5cf6;
+    --success-color: #28a745;
+    --warning-color: #ffc107;
+    --error-color: #dc3545;
+    --info-color: #17a2b8;
+    --card-bg: #ffffff;
+    --input-bg: #ffffff;
+    --modal-bg: #ffffff;
+    --navbar-bg: #ffffff;
+    --footer-bg: #f8f9fa;
+    --chat-bg: #f8f9fa;
+    --message-sent-bg: #6366f1;
+    --message-received-bg: #ffffff;
+    --message-text: #333333;
+    --message-sent-text: #ffffff;
+}
+
+[data-theme="dark"] {
+    /* Dark Mode Colors */
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #2d2d2d;
+    --bg-tertiary: #404040;
+    --text-primary: #ffffff;
+    --text-secondary: #b0b0b0;
+    --text-muted: #808080;
+    --border-color: #404040;
+    --border-light: #333333;
+    --shadow-light: rgba(0, 0, 0, 0.3);
+    --shadow-medium: rgba(0, 0, 0, 0.4);
+    --shadow-heavy: rgba(0, 0, 0, 0.6);
+    --accent-primary: #6366f1;
+    --accent-secondary: #8b5cf6;
+    --success-color: #28a745;
+    --warning-color: #ffc107;
+    --error-color: #dc3545;
+    --info-color: #17a2b8;
+    --card-bg: #2d2d2d;
+    --input-bg: #404040;
+    --modal-bg: #2d2d2d;
+    --navbar-bg: #1a1a1a;
+    --footer-bg: #2d2d2d;
+    --chat-bg: #2d2d2d;
+    --message-sent-bg: #6366f1;
+    --message-received-bg: #404040;
+    --message-text: #ffffff;
+    --message-sent-text: #ffffff;
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+}
+
+.theme-toggle:hover {
+    background: var(--bg-secondary);
+    transform: scale(1.1);
+}
+
+.theme-toggle:active {
+    transform: scale(0.95);
+}
+
+[data-theme="dark"] .theme-toggle i {
+    animation: rotate 0.5s ease;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(180deg); }
+}
+
+/* Global Dark Mode Styles */
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+}
+
+/* Navigation */
+.navbar {
+    background-color: var(--navbar-bg);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 10px var(--shadow-light);
+}
+
+.nav-logo span {
+    color: var(--text-primary);
+}
+
+.nav-link {
+    color: var(--text-primary);
+}
+
+.nav-link:hover {
+    color: var(--accent-primary);
+}
+
+.nav-link.active {
+    color: var(--accent-primary);
+}
+
+/* Buttons */
+.btn {
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+}
+
+.btn-primary:hover {
+    background: var(--accent-secondary);
+    border-color: var(--accent-secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--shadow-medium);
+}
+
+.btn-secondary {
+    background: var(--bg-secondary);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+.btn-secondary:hover {
+    background: var(--bg-tertiary);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+/* Cards */
+.card, .feature-card, .stat-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px var(--shadow-light);
+    transition: all 0.3s ease;
+}
+
+.card:hover, .feature-card:hover, .stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px var(--shadow-medium);
+}
+
+/* Forms */
+.form-control, input, textarea, select {
+    background-color: var(--input-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+}
+
+.form-control:focus, input:focus, textarea:focus, select:focus {
+    background-color: var(--input-bg);
+    border-color: var(--accent-primary);
+    color: var(--text-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.form-control::placeholder {
+    color: var(--text-muted);
+}
+
+/* Modals */
+.modal-content {
+    background-color: var(--modal-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 30px var(--shadow-heavy);
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-header h3 {
+    color: var(--text-primary);
+}
+
+.modal-close {
+    color: var(--text-secondary);
+}
+
+.modal-close:hover {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+/* Chat Styles */
+.chat-container {
+    background-color: var(--chat-bg);
+}
+
+.chat-sidebar {
+    background-color: var(--card-bg);
+    border-right: 1px solid var(--border-color);
+}
+
+.chat-header {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.chat-header h2 {
+    color: var(--text-primary);
+}
+
+.chat-search input {
+    background-color: var(--input-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+.chat-search input:focus {
+    background-color: var(--input-bg);
+    border-color: var(--accent-primary);
+    color: var(--text-primary);
+}
+
+.chat-item {
+    border-bottom: 1px solid var(--border-light);
+    transition: all 0.3s ease;
+}
+
+.chat-item:hover {
+    background-color: var(--bg-secondary);
+}
+
+.chat-item.active {
+    background-color: var(--bg-tertiary);
+    border-left: 3px solid var(--accent-primary);
+}
+
+.chat-item.unread {
+    background-color: var(--warning-color);
+    border-left: 3px solid var(--warning-color);
+}
+
+.chat-name {
+    color: var(--text-primary);
+}
+
+.chat-preview {
+    color: var(--text-secondary);
+}
+
+.chat-time {
+    color: var(--text-muted);
+}
+
+/* Messages */
+.conversation-messages {
+    background-color: var(--chat-bg);
+}
+
+.message-text {
+    background-color: var(--message-received-bg);
+    color: var(--message-text);
+    box-shadow: 0 1px 2px var(--shadow-light);
+}
+
+.message.sent .message-text {
+    background-color: var(--message-sent-bg);
+    color: var(--message-sent-text);
+}
+
+.message-sender {
+    color: var(--text-primary);
+}
+
+.message-time {
+    color: var(--text-muted);
+}
+
+/* File Messages */
+.file-message {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.image-message img {
+    border: 1px solid var(--border-color);
+}
+
+/* Conversation Input */
+.conversation-input {
+    background-color: var(--card-bg);
+    border-top: 1px solid var(--border-color);
+}
+
+.input-field {
+    background-color: var(--input-bg);
+    border: 1px solid var(--border-color);
+}
+
+.input-field textarea {
+    background-color: transparent;
+    color: var(--text-primary);
+}
+
+.input-field textarea::placeholder {
+    color: var(--text-muted);
+}
+
+/* Tables */
+table {
+    background-color: var(--card-bg);
+    color: var(--text-primary);
+}
+
+th {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-color);
+}
+
+td {
+    border-bottom: 1px solid var(--border-light);
+}
+
+tr:hover {
+    background-color: var(--bg-secondary);
+}
+
+/* Alerts */
+.alert {
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.alert-success {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.alert-error {
+    background-color: var(--error-color);
+    color: white;
+}
+
+.alert-info {
+    background-color: var(--info-color);
+    color: white;
+}
+
+/* Footer */
+footer {
+    background-color: var(--footer-bg);
+    border-top: 1px solid var(--border-color);
+}
+
+footer h3, footer h4 {
+    color: var(--text-primary);
+}
+
+footer p, footer a {
+    color: var(--text-secondary);
+}
+
+footer a:hover {
+    color: var(--accent-primary);
+}
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+}
+
+.hero-title {
+    color: var(--text-primary);
+}
+
+.hero-subtitle {
+    color: var(--text-secondary);
+}
+
+.hero-description {
+    color: var(--text-muted);
+}
+
+/* Floating Cards */
+.floating-cards .card {
+    background: linear-gradient(135deg, var(--card-bg) 0%, var(--bg-secondary) 100%);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+/* Features Section */
+.features {
+    background-color: var(--bg-secondary);
+}
+
+.section-title {
+    color: var(--text-primary);
+}
+
+.section-subtitle {
+    color: var(--text-secondary);
+}
+
+.feature-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+}
+
+.feature-icon {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+}
+
+/* Stats Section */
+.stats {
+    background-color: var(--bg-primary);
+}
+
+.stat-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+}
+
+.stat-number {
+    color: var(--accent-primary);
+}
+
+.stat-label {
+    color: var(--text-secondary);
+}
+
+/* Admin Dashboard */
+.admin-header {
+    background-color: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.stats-grid {
+    background-color: var(--bg-secondary);
+}
+
+.quick-actions {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+}
+
+/* Course Cards */
+.course-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+}
+
+.course-title {
+    color: var(--text-primary);
+}
+
+.course-description {
+    color: var(--text-secondary);
+}
+
+.course-price {
+    color: var(--accent-primary);
+}
+
+/* User Menu */
+.user-menu {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 12px var(--shadow-medium);
+}
+
+.user-dropdown a {
+    color: var(--text-primary);
+}
+
+.user-dropdown a:hover {
+    background-color: var(--bg-secondary);
+    color: var(--accent-primary);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}
+
+/* Selection */
+::selection {
+    background-color: var(--accent-primary);
+    color: white;
+}
+
+/* Focus styles */
+*:focus {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+}
+
+/* Loading animations */
+.loading {
+    background: linear-gradient(90deg, var(--bg-secondary) 25%, var(--bg-tertiary) 50%, var(--bg-secondary) 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Smooth transitions for all elements */
+* {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Dark mode specific animations */
+[data-theme="dark"] .floating-cards .card {
+    animation: float 3s ease-in-out infinite;
+}
+
+[data-theme="dark"] .hero-title {
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 5px var(--accent-primary); }
+    to { text-shadow: 0 0 20px var(--accent-primary), 0 0 30px var(--accent-primary); }
+}
+
+/* Responsive dark mode */
+@media (max-width: 768px) {
+    .theme-toggle {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    :root {
+        --border-color: #000000;
+        --text-primary: #000000;
+        --bg-primary: #ffffff;
+    }
+    
+    [data-theme="dark"] {
+        --border-color: #ffffff;
+        --text-primary: #ffffff;
+        --bg-primary: #000000;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+} 

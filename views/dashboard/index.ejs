@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> - StudyHub</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="/">StudyHub</a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/">Home</a></li>
+                <li><a href="/courses">Courses</a></li>
+                <li><a href="/dashboard" class="active">Dashboard</a></li>
+                <li><a href="/auth/logout">Logout</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="dashboard-header">
+                <h1>Welcome back, <%= user.name %>!</h1>
+                <p>Track your learning progress and manage your courses</p>
+            </div>
+
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <i class="fas fa-book-open"></i>
+                    <h3><%= enrolledCourses.length %></h3>
+                    <p>Enrolled Courses</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-certificate"></i>
+                    <h3>0</h3>
+                    <p>Completed Courses</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>0h</h3>
+                    <p>Total Learning Time</p>
+                </div>
+            </div>
+
+            <div class="dashboard-content">
+                <div class="enrolled-courses">
+                    <h2>My Enrolled Courses</h2>
+                    <% if (enrolledCourses && enrolledCourses.length > 0) { %>
+                        <div class="courses-grid">
+                            <% enrolledCourses.forEach(enrollment => { %>
+                                <div class="course-card">
+                                    <div class="course-image">
+                                        <img src="<%= enrollment.course.thumbnail || '/images/default-course.jpg' %>" alt="<%= enrollment.course.title %>">
+                                    </div>
+                                    <div class="course-content">
+                                        <h3><%= enrollment.course.title %></h3>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: <%= enrollment.progress || 0 %>%"></div>
+                                        </div>
+                                        <p>Progress: <%= enrollment.progress || 0 %>%</p>
+                                        <a href="/courses/<%= enrollment.course._id %>" class="btn btn-primary">Continue Learning</a>
+                                    </div>
+                                </div>
+                            <% }); %>
+                        </div>
+                    <% } else { %>
+                        <div class="empty-state">
+                            <i class="fas fa-graduation-cap"></i>
+                            <h3>No Enrolled Courses</h3>
+                            <p>Start your learning journey by enrolling in courses!</p>
+                            <a href="/courses" class="btn btn-primary">Browse Courses</a>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 StudyHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/javascripts/main.js"></script>
+</body>
+</html> 

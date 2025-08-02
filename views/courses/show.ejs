@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> - StudyHub</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="/">StudyHub</a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/">Home</a></li>
+                <li><a href="/courses" class="active">Courses</a></li>
+                <% if (user) { %>
+                    <li><a href="/dashboard">Dashboard</a></li>
+                    <li><a href="/auth/logout">Logout</a></li>
+                <% } else { %>
+                    <li><a href="/auth/login">Login</a></li>
+                    <li><a href="/auth/signup">Signup</a></li>
+                <% } %>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="course-detail">
+                <!-- Course Header -->
+                <div class="course-header">
+                    <div class="course-image">
+                        <img src="<%= course.thumbnail || '/images/default-course.jpg' %>" alt="<%= course.title %>">
+                    </div>
+                    <div class="course-info">
+                        <h1><%= course.title %></h1>
+                        <p class="course-description"><%= course.description %></p>
+                        <div class="course-meta">
+                            <span><i class="fas fa-user"></i> <%= course.instructor ? course.instructor.name : 'Unknown' %></span>
+                            <span><i class="fas fa-clock"></i> <%= course.duration %> hours</span>
+                            <span><i class="fas fa-signal"></i> <%= course.level %></span>
+                            <span><i class="fas fa-tag"></i> <%= course.category %></span>
+                        </div>
+                        <div class="course-price">
+                            <% if (course.discount > 0) { %>
+                                <span class="original-price">₹<%= course.originalPrice %></span>
+                                <span class="final-price">₹<%= course.price %></span>
+                                <span class="discount-badge"><%= course.discount %>% OFF</span>
+                            <% } else { %>
+                                <span class="final-price">₹<%= course.price %></span>
+                            <% } %>
+                        </div>
+                        <div class="course-actions">
+                            <button class="btn btn-primary">Enroll Now</button>
+                            <button class="btn btn-secondary">Add to Wishlist</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course Content -->
+                <div class="course-content">
+                    <div class="content-grid">
+                        <!-- Main Content -->
+                        <div class="main-content-section">
+                            <h2>What you'll learn</h2>
+                            <% if (course.learningOutcomes && course.learningOutcomes.length > 0) { %>
+                                <ul class="learning-outcomes">
+                                    <% course.learningOutcomes.forEach(outcome => { %>
+                                        <li><i class="fas fa-check"></i> <%= outcome %></li>
+                                    <% }); %>
+                                </ul>
+                            <% } else { %>
+                                <p>Learning outcomes will be updated soon.</p>
+                            <% } %>
+
+                            <h2>Requirements</h2>
+                            <% if (course.requirements && course.requirements.length > 0) { %>
+                                <ul class="requirements">
+                                    <% course.requirements.forEach(req => { %>
+                                        <li><i class="fas fa-info-circle"></i> <%= req %></li>
+                                    <% }); %>
+                                </ul>
+                            <% } else { %>
+                                <p>No specific requirements.</p>
+                            <% } %>
+
+                            <h2>Course Content</h2>
+                            <% if (course.sections && course.sections.length > 0) { %>
+                                <div class="course-sections">
+                                    <% course.sections.forEach((section, index) => { %>
+                                        <div class="section">
+                                            <h3><%= section.title %></h3>
+                                            <p><%= section.description %></p>
+                                            <% if (section.lessons && section.lessons.length > 0) { %>
+                                                <ul class="lessons">
+                                                    <% section.lessons.forEach(lesson => { %>
+                                                        <li>
+                                                            <i class="fas fa-play-circle"></i>
+                                                            <%= lesson.title %>
+                                                            <% if (lesson.duration) { %>
+                                                                <span class="duration"><%= lesson.duration %> min</span>
+                                                            <% } %>
+                                                            <% if (lesson.isFree) { %>
+                                                                <span class="free-badge">Free</span>
+                                                            <% } %>
+                                                        </li>
+                                                    <% }); %>
+                                                </ul>
+                                            <% } %>
+                                        </div>
+                                    <% }); %>
+                                </div>
+                            <% } else { %>
+                                <p>Course content will be available soon.</p>
+                            <% } %>
+                        </div>
+
+                        <!-- Sidebar -->
+                        <div class="sidebar">
+                            <!-- Course Files -->
+                            <div class="course-files">
+                                <h3>Course Materials</h3>
+                                <div class="file-list">
+                                    <% if (course.courseMaterial) { %>
+                                        <div class="file-item">
+                                            <i class="fas fa-file-pdf"></i>
+                                            <div class="file-info">
+                                                <h4>Course Material</h4>
+                                                <p>Download course material</p>
+                                            </div>
+                                            <a href="<%= course.courseMaterial %>" class="btn btn-sm btn-primary" target="_blank">
+                                                <i class="fas fa-download"></i> Download
+                                            </a>
+                                        </div>
+                                    <% } %>
+                                    
+                                    <% if (course.syllabus) { %>
+                                        <div class="file-item">
+                                            <i class="fas fa-file-pdf"></i>
+                                            <div class="file-info">
+                                                <h4>Course Syllabus</h4>
+                                                <p>Download course syllabus</p>
+                                            </div>
+                                            <a href="<%= course.syllabus %>" class="btn btn-sm btn-primary" target="_blank">
+                                                <i class="fas fa-download"></i> Download
+                                            </a>
+                                        </div>
+                                    <% } %>
+                                    
+                                    <% if (!course.courseMaterial && !course.syllabus) { %>
+                                        <p class="no-files">No course materials available yet.</p>
+                                    <% } %>
+                                </div>
+                            </div>
+
+                            <!-- Instructor Info -->
+                            <div class="instructor-info">
+                                <h3>Instructor</h3>
+                                <div class="instructor-card">
+                                    <div class="instructor-avatar">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <div class="instructor-details">
+                                        <h4><%= course.instructor ? course.instructor.name : 'Unknown' %></h4>
+                                        <p><%= course.instructor ? course.instructor.email : 'Email not available' %></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Course Stats -->
+                            <div class="course-stats">
+                                <h3>Course Statistics</h3>
+                                <div class="stats-grid">
+                                    <div class="stat-item">
+                                        <i class="fas fa-users"></i>
+                                        <span><%= course.totalStudents || 0 %> students enrolled</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <i class="fas fa-star"></i>
+                                        <span><%= course.averageRating || 0 %>/5 rating</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span><%= course.duration %> hours</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 StudyHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/javascripts/main.js"></script>
+</body>
+</html> 

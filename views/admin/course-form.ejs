@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> - StudyHub</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="/">StudyHub</a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/">Home</a></li>
+                <li><a href="/courses">Courses</a></li>
+                <li><a href="/admin">Admin</a></li>
+                <li><a href="/auth/logout">Logout</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h1><%= isEdit ? 'Edit Course' : 'Create Course' %></h1>
+                <p><%= isEdit ? 'Update course information' : 'Add a new course to your platform' %></p>
+            </div>
+
+            <!-- Flash Messages -->
+            <% if (success && success.length > 0) { %>
+                <div class="alert alert-success">
+                    <%= success %>
+                </div>
+            <% } %>
+            <% if (error && error.length > 0) { %>
+                <div class="alert alert-error">
+                    <%= error %>
+                </div>
+            <% } %>
+
+            <!-- Course Form -->
+            <div class="form-container">
+                <form method="POST" action="<%= isEdit ? `/admin/courses/${course._id}/edit` : '/admin/courses/create' %>" enctype="multipart/form-data" class="course-form">
+                    <div class="form-grid">
+                        <!-- Basic Information -->
+                        <div class="form-section">
+                            <h3>Basic Information</h3>
+                            
+                            <div class="form-group">
+                                <label for="title">Course Title *</label>
+                                <input type="text" id="title" name="title" value="<%= course ? course.title : '' %>" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="description">Description *</label>
+                                <textarea id="description" name="description" rows="4" required><%= course ? course.description : '' %></textarea>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="category">Category *</label>
+                                    <select id="category" name="category" required>
+                                        <option value="">Select Category</option>
+                                        <option value="Programming" <%= course && course.category === 'Programming' ? 'selected' : '' %>>Programming</option>
+                                        <option value="Design" <%= course && course.category === 'Design' ? 'selected' : '' %>>Design</option>
+                                        <option value="Business" <%= course && course.category === 'Business' ? 'selected' : '' %>>Business</option>
+                                        <option value="Marketing" <%= course && course.category === 'Marketing' ? 'selected' : '' %>>Marketing</option>
+                                        <option value="Music" <%= course && course.category === 'Music' ? 'selected' : '' %>>Music</option>
+                                        <option value="Photography" <%= course && course.category === 'Photography' ? 'selected' : '' %>>Photography</option>
+                                        <option value="Health" <%= course && course.category === 'Health' ? 'selected' : '' %>>Health</option>
+                                        <option value="Fitness" <%= course && course.category === 'Fitness' ? 'selected' : '' %>>Fitness</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="level">Level *</label>
+                                    <select id="level" name="level" required>
+                                        <option value="">Select Level</option>
+                                        <option value="Beginner" <%= course && course.level === 'Beginner' ? 'selected' : '' %>>Beginner</option>
+                                        <option value="Intermediate" <%= course && course.level === 'Intermediate' ? 'selected' : '' %>>Intermediate</option>
+                                        <option value="Advanced" <%= course && course.level === 'Advanced' ? 'selected' : '' %>>Advanced</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="duration">Duration *</label>
+                                    <input type="text" id="duration" name="duration" value="<%= course ? course.duration : '' %>" placeholder="e.g., 10 hours" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="language">Language *</label>
+                                    <select id="language" name="language" required>
+                                        <option value="">Select Language</option>
+                                        <option value="English" <%= course && course.language === 'English' ? 'selected' : '' %>>English</option>
+                                        <option value="Hindi" <%= course && course.language === 'Hindi' ? 'selected' : '' %>>Hindi</option>
+                                        <option value="Spanish" <%= course && course.language === 'Spanish' ? 'selected' : '' %>>Spanish</option>
+                                        <option value="French" <%= course && course.language === 'French' ? 'selected' : '' %>>French</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pricing -->
+                        <div class="form-section">
+                            <h3>Pricing</h3>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="price">Price (₹) *</label>
+                                    <input type="number" id="price" name="price" value="<%= course ? course.price : '' %>" min="0" step="0.01" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="originalPrice">Original Price (₹)</label>
+                                    <input type="number" id="originalPrice" name="originalPrice" value="<%= course ? course.originalPrice : '' %>" min="0" step="0.01">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="discount">Discount (%)</label>
+                                <input type="number" id="discount" name="discount" value="<%= course ? course.discount : '0' %>" min="0" max="100" step="1">
+                            </div>
+                        </div>
+
+                        <!-- Media -->
+                        <div class="form-section">
+                            <h3>Media</h3>
+                            
+                            <div class="form-group">
+                                <label for="thumbnail">Course Thumbnail</label>
+                                <input type="file" id="thumbnail" name="thumbnail" accept="image/*">
+                                <small>Upload course thumbnail image (JPG, PNG, GIF)</small>
+                                <% if (course && course.thumbnail) { %>
+                                    <div class="current-image">
+                                        <img src="<%= course.thumbnail %>" alt="Current thumbnail" style="max-width: 200px; margin-top: 10px;">
+                                        <p>Current thumbnail</p>
+                                    </div>
+                                <% } %>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="courseMaterial">Course Material</label>
+                                <input type="file" id="courseMaterial" name="courseMaterial" accept=".pdf,.doc,.docx">
+                                <small>Upload course material (PDF, DOC, DOCX) - Max 10MB</small>
+                                <% if (course && course.courseMaterial) { %>
+                                    <div class="current-file">
+                                        <i class="fas fa-file-pdf"></i>
+                                        <a href="<%= course.courseMaterial %>" target="_blank">View Current Material</a>
+                                    </div>
+                                <% } %>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="syllabus">Course Syllabus</label>
+                                <input type="file" id="syllabus" name="syllabus" accept=".pdf,.doc,.docx">
+                                <small>Upload course syllabus (PDF, DOC, DOCX) - Max 10MB</small>
+                                <% if (course && course.syllabus) { %>
+                                    <div class="current-file">
+                                        <i class="fas fa-file-pdf"></i>
+                                        <a href="<%= course.syllabus %>" target="_blank">View Current Syllabus</a>
+                                    </div>
+                                <% } %>
+                            </div>
+                        </div>
+
+                        <!-- Settings -->
+                        <div class="form-section">
+                            <h3>Settings</h3>
+                            
+                            <div class="form-group">
+                                <label for="instructor">Instructor</label>
+                                <select id="instructor" name="instructor" required>
+                                    <option value="">Select Instructor</option>
+                                    <% instructors.forEach(instructor => { %>
+                                        <option value="<%= instructor._id %>" <%= course && course.instructor && course.instructor.toString() === instructor._id.toString() ? 'selected' : '' %>>
+                                            <%= instructor.name %>
+                                        </option>
+                                    <% }); %>
+                                </select>
+                            </div>
+
+                            <div class="form-group checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="isPublished" <%= course && course.isPublished ? 'checked' : '' %>>
+                                    <span class="checkmark"></span>
+                                    Publish Course
+                                </label>
+                            </div>
+
+                            <div class="form-group checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="isFeatured" <%= course && course.isFeatured ? 'checked' : '' %>>
+                                    <span class="checkmark"></span>
+                                    Featured Course
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Additional Information -->
+                        <div class="form-section full-width">
+                            <h3>Additional Information</h3>
+                            
+                            <div class="form-group">
+                                <label for="requirements">Requirements</label>
+                                <textarea id="requirements" name="requirements" rows="3" placeholder="Enter requirements, one per line"><%= course && course.requirements ? course.requirements.join('\n') : '' %></textarea>
+                                <small>Enter each requirement on a new line</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="learningOutcomes">Learning Outcomes</label>
+                                <textarea id="learningOutcomes" name="learningOutcomes" rows="3" placeholder="Enter learning outcomes, one per line"><%= course && course.learningOutcomes ? course.learningOutcomes.join('\n') : '' %></textarea>
+                                <small>Enter each learning outcome on a new line</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Form Actions -->
+                    <div class="form-actions">
+                        <a href="/admin/courses" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i>
+                            <%= isEdit ? 'Update Course' : 'Create Course' %>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 StudyHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/javascripts/main.js"></script>
+</body>
+</html> 
