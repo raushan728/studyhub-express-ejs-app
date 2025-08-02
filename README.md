@@ -292,7 +292,7 @@ This project is licensed under the MIT License.
 
 For support and questions:
 - Create an issue in the repository
-- Contact: [your-email@example.com]
+- Contact: [raushansinghrajpoot687@gmail.com]
 
 ---
 
